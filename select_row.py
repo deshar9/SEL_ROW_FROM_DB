@@ -2,16 +2,27 @@ import csv
 
 def main():
 
-    x = open('TEST_CSV.csv', 'r')
-    y = open('output.csv','w')
-    reader = csv.reader(y, delimiter=',')
+    source = open('691359226421-aws-billing-detailed-line-items-with-resources-and-tags-2016-06.csv', 'r')
+    dest = open('output.csv','w')
+    reader = csv.reader(source, delimiter=',')
 
-    for i in x:
+    #------------------------------
+    cnt = 0
+    for col in reader:
 
-         y.write(i)
+        if cnt == 0: #header row
+            dest.write(','.join(col))
+            cnt = cnt + 1
+        elif col[2] == "066789247273":
+            dest.write(','.join(col))
 
-    y.close()
-    x.close()
+        #print(col[2])
 
+    # ------------------------------
+
+    dest.close()
+    source.close()
+
+#==============================================
 if __name__=="__main__":
     main()
